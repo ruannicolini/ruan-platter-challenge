@@ -1,0 +1,18 @@
+# Shopify config
+config.yml
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
+
+# Themekit files
+.theme_lock
+
+# Log files
+*.log
+
+# Environment variables
+.env
