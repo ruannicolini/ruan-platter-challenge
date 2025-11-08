@@ -1,12 +1,20 @@
 
 <section class="container mx-auto px-6 py-9 3xl:py-20 3xl:px-32">
-    <div class="lg:flex lg:justify-between">
+    <div class="mb-6 lg:mb-9 lg:flex lg:justify-between">
         <h2 class="font-source-serif-pro font-bold text-primary text-[28px] leading-[35px] tracking-[-0.01em] text-center lg:font-black lg:text-[40px] lg:leading-none lg:flex lg:items-center">{{ section.settings.title }}</h2>
         <a href="{{ section.settings.collection.url }}" class="tw-hidden font-poppins font-semibold text-secondary text-[14px] leading-[1.4] tracking-[0.03em] text-center lg:flex lg:px-8 lg:py-4">
             {{- section.settings.link_label_text -}}
             {% render 'icon-arrow-right' class: "ml-2"%}
         </a>
     </div>
+
+    <ul class="grid grid-cols-2 gap-[11px] ">
+        {% for product in section.settings.collection.products limit: section.settings.products_limit %}
+          <li>
+              {% render 'platter-product-card', product: product %}
+          </li>
+        {% endfor %}
+    </ul>
 </section>
 
 {% schema %}
@@ -29,6 +37,16 @@
       "type": "collection",
       "id": "collection",
       "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "label": "Product Limit",
+      "info": "Number of items to display",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "default": 20
     }
   ],
   "presets": [

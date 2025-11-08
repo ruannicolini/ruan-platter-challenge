@@ -1,0 +1,48 @@
+<div>
+    {% if product.featured_image %}
+        <a href="{{ product.url }}" class="block overflow-hidden relative aspect-square w-full rounded-[10px]">
+
+            <img 
+                src="{{ product.featured_image | image_url: width: 400 }}"
+                alt="{{ product.featured_image.alt | escape }}"
+                width="400"
+                height="400"
+                class="w-full h-full object-cover transition-opacity duration-300 absolute inset-0 aspect-square"
+                loading="lazy"
+            />
+            {% if product.images[1] %}
+                <img 
+                    src="{{ product.images[1] | image_url: width: 400 }}"
+                    alt="{{ product.images[1].alt | escape }}"
+                    width="400"
+                    height="400"
+                    class="w-full h-full object-cover transition-opacity duration-300 absolute inset-0 opacity-0 hover:opacity-100 aspect-square"
+                    loading="lazy"
+                />
+            {% endif %}
+        </a>
+    {% endif %}
+
+    <div class="grid mt-3 gap-2">
+        <a href="{{ product.url }}">
+            <h3 class="text-tertiary font-bebas-neue font-normal text-base leading-none tracking-wide uppercase">
+                {{ product.title }}
+            </h3>
+        </a>
+
+        <div class="flex items-center gap-0.5">
+            {% for i in (1..5) %}
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="fill-primary" d="M6.32475 0.885513C6.12057 0.788162 5.88336 0.788162 5.67918 0.885513C5.50268 0.96967 5.40536 1.11579 5.35628 1.19595C5.30555 1.27882 5.25346 1.38438 5.2027 1.48728L4.12483 3.67092L1.71381 4.02332C1.60031 4.03989 1.48386 4.05689 1.3894 4.0796C1.29802 4.10158 1.12907 4.1491 0.99461 4.29102C0.839065 4.4552 0.765914 4.68081 0.795524 4.90503C0.821119 5.09885 0.930041 5.23647 0.991142 5.30788C1.0543 5.3817 1.13863 5.4638 1.22081 5.54382L2.9647 7.24237L2.55322 9.64151C2.5338 9.75463 2.51387 9.87068 2.5062 9.96756C2.49878 10.0613 2.49161 10.2367 2.58496 10.4086C2.69293 10.6074 2.88487 10.7468 3.10731 10.788C3.29961 10.8237 3.46425 10.7626 3.55107 10.7266C3.64084 10.6894 3.74505 10.6345 3.84663 10.5811L6.00197 9.44761L8.15731 10.5811C8.25888 10.6345 8.36309 10.6894 8.45286 10.7266C8.53968 10.7626 8.70432 10.8237 8.89662 10.788C9.11906 10.7468 9.311 10.6074 9.41897 10.4086C9.51233 10.2367 9.50515 10.0613 9.49773 9.96756C9.49006 9.87068 9.47014 9.75464 9.45071 9.64153L9.03923 7.24237L10.7831 5.5438C10.8653 5.46379 10.9496 5.3817 11.0128 5.30788C11.0739 5.23647 11.1828 5.09885 11.2084 4.90503C11.238 4.68081 11.1649 4.4552 11.0093 4.29102C10.8749 4.1491 10.7059 4.10158 10.6145 4.0796C10.5201 4.05689 10.4036 4.03989 10.2901 4.02332L7.8791 3.67092L6.80125 1.48731C6.75048 1.38441 6.69839 1.27883 6.64765 1.19595C6.59857 1.11579 6.50125 0.96967 6.32475 0.885513Z"/>
+                </svg>
+            {% endfor %}
+             <span class="text-light-gray font-poppins font-normal text-[11px] leading-none">1,234 Reviews</span>
+        </div>
+
+        <p class="font-poppins font-medium text-base leading-none uppercase">
+            {{ product.price | money }}
+        </p>
+    </div>
+    
+    
+</div>
