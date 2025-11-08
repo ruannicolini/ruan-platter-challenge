@@ -1,7 +1,6 @@
 <div>
     {% if product.featured_image %}
         <a href="{{ product.url }}" class="block overflow-hidden relative aspect-square w-full rounded-[10px]">
-
             <img 
                 src="{{ product.featured_image | image_url: width: 400 }}"
                 alt="{{ product.featured_image.alt | escape }}"
@@ -43,6 +42,4 @@
             {{ product.price | money }}
         </p>
     </div>
-    
-    
 </div>
