@@ -26,6 +26,9 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
+    {% render 'inline-tailwind' %}
+
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@900&family=Bebas+Neue:wght@400&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
