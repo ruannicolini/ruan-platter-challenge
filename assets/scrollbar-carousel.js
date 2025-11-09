@@ -14,6 +14,10 @@ class ScrollbarCarousel extends HTMLElement {
         this.currentMobileVisible = mobileLimit;
         this.handleLayout(container, cards, loadMoreBtn, mobileLimit, productsPerRow, gap, maxWidth);
 
+        window.addEventListener('resize', () => {
+            this.handleLayout(container, cards, loadMoreBtn, mobileLimit, productsPerRow, gap, maxWidth);
+        });
+
         if (loadMoreBtn) {
             loadMoreBtn.addEventListener('click', () => {
                 this.currentMobileVisible += mobileLimit;
@@ -43,6 +47,9 @@ class ScrollbarCarousel extends HTMLElement {
                 } else {
                     card.classList.add('hidden');
                 }
+                card.style.width = '';
+                card.style.minWidth = '';
+                card.style.maxWidth = '';
             });
         
             if (loadMoreBtn) {
