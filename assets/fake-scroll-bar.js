@@ -7,7 +7,8 @@ class FakeScrollBar extends HTMLElement {
     }
 
     const track = document.createElement('div');
-    const thumb = document.createElement('div');
+    const thumb = document.createElement('button');
+    thumb.type = 'button';
     track.appendChild(thumb);
     this.appendChild(track);
 
@@ -104,6 +105,46 @@ class FakeScrollBar extends HTMLElement {
         const newX = Math.max(0, Math.min(maxThumbX, clickX - thumbW / 2));
         target.scrollLeft = (newX / maxThumbX) * scrollMax;
     })
+
+   const normalizeWheelDelta = (event) => {
+        let delta;
+        if (event.deltaY !== 0) {
+            delta = event.deltaY;
+        } else {
+            delta = event.deltaX;
+        }
+
+        if (event.deltaMode === 1) {
+            delta *= 16;
+        } else if (event.deltaMode === 2) {
+            delta *= window.innerHeight;
+        }
+
+        return delta;
+    };
+
+    const onWheel = (event) => {
+        if (event.ctrlKey || event.metaKey) return;
+
+        const wantsHorizontalScroll =
+            event.shiftKey || Math.abs(event.deltaX) > Math.abs(event.deltaY);
+
+        if (!wantsHorizontalScroll) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const rawDelta = Math.abs(event.deltaX) > 0
+            ? event.deltaX
+            : normalizeWheelDelta(event);
+
+        const scrollSpeedFactor = 1;
+
+        target.scrollLeft += rawDelta * scrollSpeedFactor;
+    };
+
+    target.addEventListener('wheel', onWheel, { passive: false });
 
     requestAnimationFrame(updateThumb);
   }
