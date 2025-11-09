@@ -1,9 +1,9 @@
 // @ts-nocheck
-class FakeScrollBar extends HTMLElement {
+class scrollController extends HTMLElement {
   connectedCallback() {
     const target = document.querySelector(this.dataset.target);
     if (!target) {
-        return console.warn('FakeScrollBar: target not found →', this.dataset.target);
+        return console.warn('scrollController: target not found →', this.dataset.target);
     }
 
     const track = document.createElement('div');
@@ -150,6 +150,6 @@ class FakeScrollBar extends HTMLElement {
   }
 }
 
-if (!customElements.get('fake-scroll-ba')) {
-    customElements.define('fake-scroll-bar', FakeScrollBar)
+if (!customElements.get('scroll-controller')) {
+    customElements.define('scroll-controller', scrollController)
 }
