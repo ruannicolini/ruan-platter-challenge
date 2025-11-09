@@ -9,13 +9,12 @@ class ScrollbarCarousel extends HTMLElement {
 
         const productsPerRow = parseFloat(this.dataset.productsPerRow);
         const gap = parseFloat(this.dataset.desktopGap);
-        const maxWidth = parseFloat(this.dataset.maxWidth);
 
         this.currentMobileVisible = mobileLimit;
-        this.handleLayout(container, cards, loadMoreBtn, mobileLimit, productsPerRow, gap, maxWidth);
+        this.handleLayout(container, cards, loadMoreBtn, mobileLimit, productsPerRow, gap);
 
         window.addEventListener('resize', () => {
-            this.handleLayout(container, cards, loadMoreBtn, mobileLimit, productsPerRow, gap, maxWidth);
+            this.handleLayout(container, cards, loadMoreBtn, mobileLimit, productsPerRow, gap);
         });
 
         if (loadMoreBtn) {
@@ -34,7 +33,7 @@ class ScrollbarCarousel extends HTMLElement {
         }
     }
   
-    handleLayout(container, cards, loadMoreBtn, mobileLimit, productsPerRow, gap, maxWidth) {
+    handleLayout(container, cards, loadMoreBtn, mobileLimit, productsPerRow, gap) {
         const isMobile = window.innerWidth < 1024;
         if (isMobile) {      
             if (!this.currentMobileVisible) {
@@ -62,17 +61,17 @@ class ScrollbarCarousel extends HTMLElement {
                 loadMoreBtn.classList.add('hidden');
             }
 
-            this.calculateCardWidth(container, cards, productsPerRow, gap, maxWidth);
+            this.calculateCardWidth(container, cards, productsPerRow, gap);
         }
     }
 
-    calculateCardWidth(container, cards, productsPerRow, gap, maxWidth) {
-        // const availableWidth = this.clientWidth;
-        const availableWidth = container.clientWidth;
-        const effectiveWidth = Math.min(maxWidth, availableWidth);
+    calculateCardWidth(container, cards, productsPerRow, gap) {
+        const containerStyles = getComputedStyle(container);
+        const paddingLeft = parseFloat(containerStyles.paddingLeft) || 0;
+        const availableWidth = this.clientWidth;
         const visibleGaps = Math.floor(productsPerRow);
         const totalGapsWidth = gap * visibleGaps;
-        const cardWidth = (effectiveWidth - totalGapsWidth) / productsPerRow;
+        const cardWidth = (availableWidth - paddingLeft - totalGapsWidth) / productsPerRow;
         container.style.setProperty('--dynamic-product-card-width', `${cardWidth}px`);
 
         requestAnimationFrame(() => {
