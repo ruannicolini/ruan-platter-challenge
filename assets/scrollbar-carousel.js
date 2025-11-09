@@ -73,6 +73,12 @@ class ScrollbarCarousel extends HTMLElement {
         const totalGapsWidth = gap * visibleGaps;
         const cardWidth = (effectiveWidth - totalGapsWidth) / productsPerRow;
         container.style.setProperty('--dynamic-product-card-width', `${cardWidth}px`);
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                this.classList.remove('no-transitions');
+            });
+        });
     }
 }
 

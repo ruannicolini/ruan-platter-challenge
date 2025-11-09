@@ -7,7 +7,7 @@
         </a>
     </div>
 
-    <scrollbar-carousel id="scrollbar-carousel-{{ section.id }}" class="block w-full mx-auto"
+    <scrollbar-carousel id="scrollbar-carousel-{{ section.id }}" class="block w-full mx-auto no-transitions"
         {% if section.settings.overflow_effect == true %} data-overflow-effect {% endif %}
         data-mobile-limit="{{ section.settings.mobile_products_limit }}"
         data-mobile-load-more-qty="{{ section.settings.load_more_products_qty }}"
@@ -17,7 +17,11 @@
     >
         <div class="relative">
             <div class="overflow-x-auto">
-                <ul data-carousel-container class="[--dynamic-product-card-width:calc(100%/6)] grid grid-cols-2 gap-3 lg:flex lg:overflow-x-hidden lg:flex-row lg:pb-[52px]">
+                <ul
+                data-carousel-container
+                class="grid grid-cols-2 gap-3 lg:flex lg:overflow-x-hidden lg:flex-row lg:pb-[52px]"
+                style="--dynamic-product-card-width: calc((100vw - {{ section.settings.gap }}px * ({{ section.settings.products_per_row | minus: 1 }}) ) / {{ section.settings.products_per_row }} );"
+                >
                     {% for product in section.settings.collection.products limit: section.settings.products_limit %}
                         <li data-card class="lg:min-w-[var(--dynamic-product-card-width)] lg:w-[var(--dynamic-product-card-width)] lg:max-w-[var(--dynamic-product-card-width)] {% if forloop.index > section.settings.mobile_products_limit %}hidden{% endif %}">
                             {% render 'platter-product-card', product: product %}
@@ -27,8 +31,8 @@
             </div>
         </div>
 
-        <div class="text-center mt-6 lg:hidden">
-            <button data-load-more class="w-full max-w-sm bg-tertiary px-6 py-4 rounded-[100px] font-poppins font-semibold text-base text-[#FFFFFA] tracking-wide text-center">Load More</button>
+        <div class="text-center mt-3 lg:hidden">
+            <button data-load-more class="w-full max-w-sm bg-tertiary px-6 py-4 rounded-[100px] font-poppins font-semibold text-base text-[#FFFFFA] tracking-wide text-center">Show More</button>
         </div>
     </scrollbar-carousel>
 
@@ -62,9 +66,12 @@
                     --half-diff: calc((100vw - var(--layout-page-width)) / 2);
                     padding-left: calc(var(--half-diff) + var(--gutter) + var(--container-h-padding));
                     padding-right: calc(var(--half-diff) + var(--gutter) + var(--container-h-padding));
+                    box-sizing: border-box;
                 }
             {% endif %}
         }
+
+        .no-transitions * { transition: none !important; }
     {% endstyle %}
 </section>
 
