@@ -40,6 +40,8 @@ class ScrollbarCarousel extends HTMLElement {
             if (!this.currentMobileVisible) {
                 this.currentMobileVisible = mobileLimit;
             }
+
+            container.style.setProperty('--dynamic-product-card-width', '100%');
         
             cards.forEach((card, index) => {
                 if (index < this.currentMobileVisible) {
@@ -47,9 +49,6 @@ class ScrollbarCarousel extends HTMLElement {
                 } else {
                     card.classList.add('hidden');
                 }
-                card.style.width = '';
-                card.style.minWidth = '';
-                card.style.maxWidth = '';
             });
         
             if (loadMoreBtn) {
@@ -73,16 +72,7 @@ class ScrollbarCarousel extends HTMLElement {
         const visibleGaps = Math.floor(productsPerRow);
         const totalGapsWidth = gap * visibleGaps;
         const cardWidth = (effectiveWidth - totalGapsWidth) / productsPerRow;
-        
-        const isInteger = productsPerRow % 1 === 0;
-        const gapsInView = isInteger ? (productsPerRow - 1) : visibleGaps;
-        const containerWidth = (cardWidth * productsPerRow) + (gap * gapsInView);
-        
-        cards.forEach(card => {
-            card.style.width = `${cardWidth}px`;
-            card.style.minWidth = `${cardWidth}px`;
-            card.style.maxWidth = `${cardWidth}px`;
-        });
+        container.style.setProperty('--dynamic-product-card-width', `${cardWidth}px`);
     }
 }
 
