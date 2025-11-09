@@ -1,7 +1,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script>
-  tailwind.config = {
+  window.tailwind = window.tailwind || {};
+  window.tailwind.config = {
     theme: {
       extend: {
         colors: {
@@ -17,10 +18,14 @@
           'source-serif-pro': ['"Source Serif Pro"', 'serif'],
           'bebas-neue': ['"Bebas Neue"', 'sans-serif'],
         },
+        fontSize: {
+          base: ['16px', { lineHeight: '20px' }],
+        },
         screens: {
           '3xl': '1920px',
         },
-        containers: {
+        container: {
+          center: true,
           screens: {
             sm: '640px',
             md: '768px',
