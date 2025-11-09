@@ -67,7 +67,8 @@ class ScrollbarCarousel extends HTMLElement {
     }
 
     calculateCardWidth(container, cards, productsPerRow, gap, maxWidth) {
-        const availableWidth = this.clientWidth;
+        // const availableWidth = this.clientWidth;
+        const availableWidth = container.clientWidth;
         const effectiveWidth = Math.min(maxWidth, availableWidth);
         const visibleGaps = Math.floor(productsPerRow);
         const totalGapsWidth = gap * visibleGaps;

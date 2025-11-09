@@ -16,7 +16,7 @@ class FakeScrollBar extends HTMLElement {
         'relative',
         'rounded-full',
         'overflow-hidden',
-        'mt-4',
+        'mt-1',
         'mx-auto',
         'cursor-pointer',
         'bg-placeholder',

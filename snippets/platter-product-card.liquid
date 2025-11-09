@@ -1,12 +1,12 @@
 <div>
     {% if product.featured_image %}
         <a href="{{ product.url }}" class="block overflow-hidden relative aspect-square w-full rounded-[10px]">
-            <div class="z-10 absolute flex justify-between p-1 left-0 top-0 w-full">
+            <div class="z-10 absolute flex justify-between p-1 left-0 top-0 w-full lg:p-2">
                 {% if product.tags contains 'best-seller' %}
-                    <span class="bg-white px-2 py-1 font-bebas-neue font-normal text-[8px] text-black leading-none tracking-wider text-center border border-solid border-black rounded-[100px]">Best Seller</span>
+                    <span class="bg-white px-2 py-1 font-bebas-neue font-normal text-[8px] text-black leading-none tracking-wider text-center border border-solid border-black rounded-[100px] lg:text-[10px]">Best Seller</span>
                 {% endif %}
                 {% if product.tags contains '15-off' %}
-                    <span class="bg-badge-sale px-2 py-1 font-bebas-neue font-normal text-[8px] text-white leading-none tracking-wider text-center border border-solid border-black rounded-[100px]">SAVE 15%</span>
+                    <span class="bg-badge-sale px-2 py-1 font-bebas-neue font-normal text-[8px] text-white leading-none tracking-wider text-center border border-solid border-black rounded-[100px] lg:text-[10px]">SAVE 15%</span>
                 {% endif %}
             </div>
             <img 
@@ -30,23 +30,23 @@
         </a>
     {% endif %}
 
-    <div class="grid mt-3 gap-2 m-2">
+    <div class="grid mt-3 gap-2 m-2 lg:mt-4 lg:pt-0.5 lg:m-3">
         <a href="{{ product.url }}">
-            <h3 class="text-tertiary font-bebas-neue font-normal text-base tracking-wide uppercase">
+            <h3 class="text-tertiary font-bebas-neue font-normal text-base tracking-wide uppercase lg:text-[18px] lg:leading-none lg:tracking-[0.54px]">
                 {{ product.title }}
             </h3>
         </a>
 
-        <div class="flex items-center gap-0.5">
+        <div class="flex items-center gap-0.5 lg:mt-1">
             {% for i in (1..5) %}
-                <svg class="w-[9px] h-[9px]" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="w-[9px] h-[9px] lg:w-[12px] lg:h-[12px]" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path class="fill-primary" d="M6.32475 0.885513C6.12057 0.788162 5.88336 0.788162 5.67918 0.885513C5.50268 0.96967 5.40536 1.11579 5.35628 1.19595C5.30555 1.27882 5.25346 1.38438 5.2027 1.48728L4.12483 3.67092L1.71381 4.02332C1.60031 4.03989 1.48386 4.05689 1.3894 4.0796C1.29802 4.10158 1.12907 4.1491 0.99461 4.29102C0.839065 4.4552 0.765914 4.68081 0.795524 4.90503C0.821119 5.09885 0.930041 5.23647 0.991142 5.30788C1.0543 5.3817 1.13863 5.4638 1.22081 5.54382L2.9647 7.24237L2.55322 9.64151C2.5338 9.75463 2.51387 9.87068 2.5062 9.96756C2.49878 10.0613 2.49161 10.2367 2.58496 10.4086C2.69293 10.6074 2.88487 10.7468 3.10731 10.788C3.29961 10.8237 3.46425 10.7626 3.55107 10.7266C3.64084 10.6894 3.74505 10.6345 3.84663 10.5811L6.00197 9.44761L8.15731 10.5811C8.25888 10.6345 8.36309 10.6894 8.45286 10.7266C8.53968 10.7626 8.70432 10.8237 8.89662 10.788C9.11906 10.7468 9.311 10.6074 9.41897 10.4086C9.51233 10.2367 9.50515 10.0613 9.49773 9.96756C9.49006 9.87068 9.47014 9.75464 9.45071 9.64153L9.03923 7.24237L10.7831 5.5438C10.8653 5.46379 10.9496 5.3817 11.0128 5.30788C11.0739 5.23647 11.1828 5.09885 11.2084 4.90503C11.238 4.68081 11.1649 4.4552 11.0093 4.29102C10.8749 4.1491 10.7059 4.10158 10.6145 4.0796C10.5201 4.05689 10.4036 4.03989 10.2901 4.02332L7.8791 3.67092L6.80125 1.48731C6.75048 1.38441 6.69839 1.27883 6.64765 1.19595C6.59857 1.11579 6.50125 0.96967 6.32475 0.885513Z"/>
                 </svg>
             {% endfor %}
-             <span class="text-light-gray font-poppins font-normal text-[11px] leading-none">1,234 Reviews</span>
+             <span class="text-light-gray font-poppins font-normal text-[11px] leading-none lg:text-[12px]">1,234 Reviews</span>
         </div>
 
-        <p class="font-poppins font-medium text-base uppercase mt-2">
+        <p class="font-poppins font-medium text-base uppercase mt-2 lg:text-base lg:leading-none">
             {{ product.price | money }}
         </p>
     </div>
