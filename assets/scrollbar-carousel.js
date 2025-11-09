@@ -1,51 +1,82 @@
 // @ts-nocheck
 class ScrollbarCarousel extends HTMLElement {
-  connectedCallback() {
-    const mobileLimit = parseInt(this.dataset.mobileLimit || '4');
-    const cards = this.querySelectorAll('[data-card]');
-    const loadMoreBtn = this.querySelector('[data-load-more]');
-    const container = this.querySelector('[data-carousel-container]');
+    connectedCallback() {
+        const container = this.querySelector('[data-carousel-container]');
+        const cards = this.querySelectorAll('[data-card]');
 
-    this.currentMobileVisible = mobileLimit;
-    this.handleLayout(container, cards, loadMoreBtn, mobileLimit);
-    
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', () => {
-            this.currentMobileVisible += mobileLimit;
+        const mobileLimit = parseInt(this.dataset.mobileLimit)
+        const loadMoreBtn = this.querySelector('[data-load-more]');
+
+        const productsPerRow = parseFloat(this.dataset.productsPerRow);
+        const gap = parseFloat(this.dataset.desktopGap);
+        const maxWidth = parseFloat(this.dataset.maxWidth);
+
+        this.currentMobileVisible = mobileLimit;
+        this.handleLayout(container, cards, loadMoreBtn, mobileLimit, productsPerRow, gap, maxWidth);
+
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                this.currentMobileVisible += mobileLimit;
+                cards.forEach((card, index) => {
+                    if (index < this.currentMobileVisible) {
+                        card.classList.remove('hidden');
+                    }
+                });
+                const hasHiddenCards = Array.from(cards).some(card => card.classList.contains('hidden'));
+                if (!hasHiddenCards) {
+                    loadMoreBtn.classList.add('hidden');
+                }
+            });
+        }
+    }
+  
+    handleLayout(container, cards, loadMoreBtn, mobileLimit, productsPerRow, gap, maxWidth) {
+        const isMobile = window.innerWidth < 1024;
+        if (isMobile) {      
+            if (!this.currentMobileVisible) {
+                this.currentMobileVisible = mobileLimit;
+            }
+        
             cards.forEach((card, index) => {
                 if (index < this.currentMobileVisible) {
                     card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
                 }
             });
-            const hasHiddenCards = Array.from(cards).some(card => card.classList.contains('hidden'));
-            if (!hasHiddenCards) {
+        
+            if (loadMoreBtn) {
+                const hasHiddenCards = Array.from(cards).some(card => card.classList.contains('hidden'));
+                loadMoreBtn.style.display = hasHiddenCards ? 'inline-block' : 'none';
+            }
+        }else{
+            cards.forEach(card => card.classList.remove('hidden'));
+
+            if (loadMoreBtn) {
                 loadMoreBtn.classList.add('hidden');
             }
-        });
-    }
-  }
-  
-  handleLayout(container, cards, loadMoreBtn, mobileLimit) {
-    const isMobile = window.innerWidth < 1024;
-    if (isMobile) {      
-        if (!this.currentMobileVisible) {
-            this.currentMobileVisible = mobileLimit;
-        }
-      
-        cards.forEach((card, index) => {
-            if (index < this.currentMobileVisible) {
-                card.classList.remove('hidden');
-            } else {
-                card.classList.add('hidden');
-            }
-        });
-      
-        if (loadMoreBtn) {
-            const hasHiddenCards = Array.from(cards).some(card => card.classList.contains('hidden'));
-            loadMoreBtn.style.display = hasHiddenCards ? 'inline-block' : 'none';
+
+            this.calculateCardWidth(container, cards, productsPerRow, gap, maxWidth);
         }
     }
-  }
+
+    calculateCardWidth(container, cards, productsPerRow, gap, maxWidth) {
+        const availableWidth = this.clientWidth;
+        const effectiveWidth = Math.min(maxWidth, availableWidth);
+        const visibleGaps = Math.floor(productsPerRow);
+        const totalGapsWidth = gap * visibleGaps;
+        const cardWidth = (effectiveWidth - totalGapsWidth) / productsPerRow;
+        
+        const isInteger = productsPerRow % 1 === 0;
+        const gapsInView = isInteger ? (productsPerRow - 1) : visibleGaps;
+        const containerWidth = (cardWidth * productsPerRow) + (gap * gapsInView);
+        
+        cards.forEach(card => {
+            card.style.width = `${cardWidth}px`;
+            card.style.minWidth = `${cardWidth}px`;
+            card.style.maxWidth = `${cardWidth}px`;
+        });
+    }
 }
 
 if (!customElements.get('scrollbar-carousel')) {

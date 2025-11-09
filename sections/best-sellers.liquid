@@ -8,11 +8,14 @@
         </a>
     </div>
 
-    <scrollbar-carousel class="block" 
+    <scrollbar-carousel id="scrollbar-carousel-{{ section.id }}" class="block w-full mx-auto"
         data-mobile-limit="{{ section.settings.mobile_products_limit }}"
-        data-mobile-load-more-qty="{{ section.settings.load_more_products_qty }}"  
+        data-mobile-load-more-qty="{{ section.settings.load_more_products_qty }}"
+        data-products-per-row="{{ section.settings.products_per_row }}"
+        data-desktop-gap="{{ section.settings.gap }}"
+        data-max-width="{{ section.settings.max_width }}"
     >
-        <ul class="grid grid-cols-2 gap-3">
+        <ul class="grid grid-cols-2 gap-3 lg:flex lg:overflow-x-auto lg:flex-row lg:pb-[52px]">
             {% for product in section.settings.collection.products limit: section.settings.products_limit %}
                 <li data-card class="hidden">
                     {% render 'platter-product-card', product: product %}
@@ -24,6 +27,20 @@
             <button data-load-more class="w-full max-w-sm bg-tertiary px-6 py-4 rounded-[100px] font-poppins font-semibold text-base text-[#FFFFFA] tracking-wide text-center">Load More</button>
         </div>
     </scrollbar-carousel>
+
+    {% style %}
+        #scrollbar-carousel-{{ section.id }} {
+            max-width: {{ section.settings.max_width }}px;
+        }
+        #scrollbar-carousel-{{ section.id }} ul {
+            gap: {{ section.settings.mobile_gap }}px;
+        }
+        @media screen and (min-width: 1024px) {
+            #scrollbar-carousel-{{ section.id }} ul {
+                gap: {{ section.settings.gap }}px;
+            }
+        }
+    {% endstyle %}
 </section>
 
 {% schema %}
@@ -58,6 +75,15 @@
         "default": 20
     },
     {
+        "type": "range",
+        "id": "max_width",
+        "label": "Max container width (px)",
+        "min": 1000,
+        "max": 2000,
+        "step": 100,
+        "default": 1400
+    },
+    {
         "type": "header",
         "content": "Mobile"
     },
@@ -78,6 +104,37 @@
         "max": 12,
         "step": 2,
         "default": 6
+    },
+    {
+        "type": "range",
+        "id": "mobile_gap",
+        "label": "Spacing between cards (px)",
+        "min": 10,
+        "max": 50,
+        "step": 2,
+        "default": 12
+    },
+    {
+        "type": "header",
+        "content": "Desktop"
+    },
+    {
+        "type": "range",
+        "id": "products_per_row",
+        "label": "Products per row (visible)",
+        "min": 3,
+        "max": 8,
+        "step": 0.1,
+        "default": 5.8
+    },
+    {
+        "type": "range",
+        "id": "gap",
+        "label": "Spacing between cards (px)",
+        "min": 10,
+        "max": 50,
+        "step": 5,
+        "default": 25
     }
   ],
   "presets": [
