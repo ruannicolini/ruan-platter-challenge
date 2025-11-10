@@ -4,7 +4,8 @@ class ScrollbarCarousel extends HTMLElement {
         const container = this.querySelector('[data-carousel-container]');
         const cards = this.querySelectorAll('[data-card]');
 
-        const mobileLimit = parseInt(this.dataset.mobileLimit)
+        const mobileLimit = parseInt(this.dataset.mobileLimit);
+        const mobileLoadMoreQty = parseInt(this.dataset.mobileLoadMoreQty);
         const loadMoreBtn = this.querySelector('[data-load-more]');
 
         const productsPerRow = parseFloat(this.dataset.productsPerRow);
@@ -19,7 +20,7 @@ class ScrollbarCarousel extends HTMLElement {
 
         if (loadMoreBtn) {
             loadMoreBtn.addEventListener('click', () => {
-                this.currentMobileVisible += mobileLimit;
+                this.currentMobileVisible += mobileLoadMoreQty;
                 cards.forEach((card, index) => {
                     if (index < this.currentMobileVisible) {
                         card.classList.remove('hidden');
